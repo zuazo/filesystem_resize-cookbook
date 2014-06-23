@@ -1,25 +1,54 @@
 require 'chef/mixin/shell_out'
 
-class PartitionResize
+module PartitionResize
 
   class Partition
+    extend Chef::Mixin::ShellOut
 
     class Base
       extend Chef::Mixin::ShellOut
 
       def initialize(dev)
-        @dev = dev
+        from_loop = Partition.from_loop(dev)
+        if ! from_loop.nil?
+          @dev = from_loop
+          @lo_dev = dev
+        else
+          @dev = dev
+          @lo_dev = Partition.to_loop(dev)
+        end
       end
+
+      def loop_device
+        @lo_dev
+      end
+
+      def block_device
+        @lo_dev || @dev
+      end
+
+      def device
+        @dev
+      end
+
+      def is_loop?
+        ! @lo_dev.nil?
+      end
+
+      def to_s
+        is_loop? ? "#{device} (#{loop_device})" : device
+      end
+
     end
 
     class Physical < Base
 
       def size
         @size ||= begin
-          cmd = self.class.shell_out("lsblk --bytes --raw --noheadings --output NAME,SIZE '#{@dev.gsub(/'/, '')}'")
+          cmd = self.class.shell_out("lsblk --bytes --raw --noheadings --output NAME,SIZE '#{block_device.gsub(/'/, '')}'")
           if cmd.exitstatus == 0
             line = cmd.stdout.split("\n")[0]
-            dev = ::File.basename(@dev)
+            dev = ::File.basename(block_device)
             case line
             when /^#{Regexp.escape(dev)}\s([0-9]+)/
               $1.to_i
@@ -54,15 +83,30 @@ class PartitionResize
       def size
         @size ||= begin
           block_count = block_size = nil
-          cmd = self.class.shell_out("dumpe2fs -h '#{@dev.gsub(/'/, '')}'")
-          if cmd.exitstatus == 0
-            cmd.stdout.split("\n").each do |line|
-              case line
-              when /^Block\s+count:\s+([0-9]+)$/
-                block_count = $1.to_i
-              when /^Block\s+size:\s+([0-9]+)$/
-                block_size = $1.to_i
+          case type
+          when /^ext[0-9]+$/
+            cmd = self.class.shell_out("dumpe2fs -h '#{device.gsub(/'/, '')}'")
+            if cmd.exitstatus == 0
+              cmd.stdout.split("\n").each do |line|
+                case line
+                when /^Block\s+count:\s+([0-9]+)$/
+                  block_count = $1.to_i
+                when /^Block\s+size:\s+([0-9]+)$/
+                  block_size = $1.to_i
+                end
               end
+            end
+          when 'xfs'
+            # must be mounted
+            cmd = self.class.shell_out("xfs_info '#{loop_device.gsub(/'/, '')}'")
+            if cmd.exitstatus == 0
+              cmd.stdout.split("\n").each do |line|
+                case line
+                when /^data\s+=\s+bsize=([0-9]+)\s+blocks=([0-9]+),/
+                  block_size = $1.to_i
+                  block_count = $2.to_i
+               end
+             end
             end
           end
           unless block_count.nil? or block_size.nil?
@@ -75,7 +119,7 @@ class PartitionResize
 
       def type
         @type ||= begin
-          cmd = self.class.shell_out("file --special-files --dereference '#{@dev.gsub(/'/, '')}'")
+          cmd = self.class.shell_out("file --special-files --dereference '#{device.gsub(/'/, '')}'")
           if cmd.exitstatus == 0
             case cmd.stdout.split("\n")[0]
             when / ([^ ]+) filesystem /
@@ -89,9 +133,9 @@ class PartitionResize
         end
       end
 
-      def get_mountpoint
-        @mountpoint ||= begin
-          cmd = self.class.shell_out("findmnt --list --first-only --canonicalize --evaluate --noheadings --output TARGET '#{@dev.gsub(/'/, '')}'")
+      def mount_point
+        @mount_point ||= begin
+          cmd = self.class.shell_out("findmnt --list --first-only --canonicalize --evaluate --noheadings --output TARGET '#{block_device.gsub(/'/, '')}'")
           if cmd.exitstatus == 0
             cmd.stdout.split("\n")[0]
           else
@@ -101,30 +145,29 @@ class PartitionResize
       end
 
       def resize
-        Chef::Log.info("#{@dev} type: #{type}")
+        Chef::Log.info("#{self} type: #{type}")
         command = case type
         when /^ext[0-9]+$/
           if command_running?('resize2fs')
             Chef::Log.warn('PartitionResize: resize2fs already running, skipping')
             return nil
           end
-          "resize2fs '#{@dev.gsub(/'/, '')}'"
+          "resize2fs '#{device.gsub(/'/, '')}'"
         when 'xfs'
           if command_running?('xfs_growfs')
             Chef::Log.warn('PartitionResize: xfs_growfs already running, skipping')
             return false
           end
-          mountpoint = get_mountpoint
-          if mountpoint.nil?
-            Chef::Log.warn("PartitionResize: mountpoint not found for #{@dev}, required by XFS")
+          if mount_point.nil?
+            Chef::Log.warn("PartitionResize: mount point not found for #{self}, required by XFS")
           else
-            "xfs_growfs -d '#{mountpoint.gsub(/'/, '')}'"
+            "xfs_growfs -d '#{mount_point.gsub(/'/, '')}'"
           end
         else
           Chef::Log.warn("PartitionResize: unknown partition type: #{type}")
           return false
         end
-        Chef::Log.info("PartitionResize: resizing #{@dev} partition...")
+        Chef::Log.info("PartitionResize: resizing #{self} partition... (#{command})")
         self.class.shell_out(command)
         return true
       end
@@ -147,7 +190,7 @@ class PartitionResize
       physical = Physical.new(@dev)
       logical = Logical.new(@dev)
       if !physical.size.nil? and !logical.size.nil?
-        Chef::Log.info("#{@dev}: physical size: #{physical.size}, logical size: #{logical.size}")
+        Chef::Log.info("#{physical}: physical size: #{physical.size}, logical size: #{logical.size}")
         logical.resize if physical.size > logical.size
       else
         false
@@ -159,6 +202,25 @@ class PartitionResize
       partitions.each do |dev|
         Partition.new(dev).resize
       end
+    end
+
+    def self.from_loop(dev)
+      cmd = shell_out('losetup -a')
+      if cmd.exitstatus == 0
+        cmd.stdout.split("\n").each do |line|
+          return $1 if line =~ /^#{Regexp.escape(dev)}: [^ ]+ [(](.+)[)]$/
+        end
+      end
+      nil
+    end
+
+    def self.to_loop(dev)
+      cmd = shell_out("losetup -j '#{dev.gsub(/'/, '')}'")
+      if cmd.exitstatus == 0
+        lo_dev = cmd.stdout.split(':', 2)[0]
+        return lo_dev unless lo_dev.nil? or lo_dev.length == 0
+      end
+      nil
     end
 
   end # Partition
