@@ -17,4 +17,9 @@
 # limitations under the License.
 #
 
-PartitionResize::Partition.resize_all
+ruby_block 'partition_resize' do
+  block do
+    Chef::Recipe.send(:include, PartitionResize)
+    Partition.resize_all
+  end
+end
