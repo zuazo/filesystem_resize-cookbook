@@ -17,9 +17,10 @@
 # limitations under the License.
 #
 
-ruby_block 'partition_resize' do
+r = ruby_block 'partition_resize' do
   block do
     Chef::Recipe.send(:include, PartitionResize)
     Partition.resize_all
   end
 end
+r.run_action(:create) if node['partition_resize']['compiletime']
