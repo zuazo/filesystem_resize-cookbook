@@ -1,1 +1,1 @@
-default['partition_resize']['packages']['xfs'] = %w{xfsprogs}
+default['partition_resize']['packages']['xfs'] = %w(xfsprogs)

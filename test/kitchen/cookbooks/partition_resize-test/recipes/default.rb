@@ -28,16 +28,16 @@ node['partition_resize-test']['types_to_test'].each do |type|
   block_device = "/tmp/#{type}_disk.img"
   mount_point = "/tmp/#{type}_disk"
   size = 100 # MB
-  mkfs_args = case type
-    when /^ext/
-      # Force mke2fs to create a filesystem, # even if the
-      # specified device is not a partition on a # block
-      # special device. (only for ext2-4)
-      [ '-F' ]
+  mkfs_args =
+    case type
+    # Force mke2fs to create a filesystem, # even if the
+    # specified device is not a partition on a # block
+    # special device. (only for ext2-4)
+    when /^ext/ then %w(-F)
+    # Force overwrite when an existing filesystem is
+    # detected  on the device.
     else
-      #  Force overwrite when an existing filesystem is
-      # detected  on the device.
-      [ '-f' ]
+      %w(-f)
   end
 
   ruby_block "loop_partition_create(#{type})" do
@@ -49,14 +49,20 @@ node['partition_resize-test']['types_to_test'].each do |type|
       Shell.run("dd if=/dev/zero of=#{block_device} bs=1M count=#{size}")
 
       Shell.run("mkfs.#{type} #{mkfs_args.join(' ')} #{block_device}")
+      Shell.run("e2fsck -f -y #{block_device}") if type =~ /^ext/
 
-      Shell.run("dd oflag=append conv=notrunc if=/dev/zero of=#{block_device} bs=1M count=#{size}")
+      Shell.run(
+        "dd oflag=append conv=notrunc if=/dev/zero of=#{block_device} "\
+        "bs=1M count=#{size}"
+      )
       Shell.run("mkdir -p #{mount_point}")
       Shell.run("mount -o loop #{block_device} #{mount_point}")
 
       physical = Partition::Physical.new(block_device)
       logical = Partition::Logical.new(block_device)
-      raise "Partition size equal: #{block_device} (#{physical.size})" if physical.size == logical.size
+      if physical.size == logical.size
+        fail "Partition size equal: #{block_device} (#{physical.size})"
+      end
     end
   end
 end
@@ -71,7 +77,10 @@ node['partition_resize-test']['types_to_test'].each do |type|
     block do
       physical = Partition::Physical.new(block_device)
       logical = Partition::Logical.new(block_device)
-      raise "Partition not resized: #{block_device} (#{physical.size} == #{logical.size})" unless physical.size == logical.size
+      unless physical.size == logical.size
+        fail "Partition not resized: #{block_device} "\
+          "(#{physical.size} == #{logical.size})"
+      end
 
       # cleaning
       Shell.run("umount #{mount_point}")
