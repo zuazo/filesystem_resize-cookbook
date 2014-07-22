@@ -24,9 +24,23 @@ end
 require 'chef/mixin/shell_out'
 Chef::Recipe.send(:include, PartitionResize)
 
+def block_device_path(type)
+  ::File.join(
+    node['partition_resize-test']['directory'],
+    "#{type}_disk.img"
+  )
+end
+
+def mount_point_path(type)
+  ::File.join(
+    node['partition_resize-test']['directory'],
+    "#{type}_disk"
+  )
+end
+
 node['partition_resize-test']['types_to_test'].each do |type|
-  block_device = "#{node['partition_resize-test']['directory']}/#{type}_disk.img"
-  mount_point = "#{node['partition_resize-test']['directory']}/#{type}_disk"
+  block_device = block_device_path(type)
+  mount_point = mount_point_path(type)
   size = 100 # MB
   mkfs_args =
     case type
@@ -70,8 +84,8 @@ end
 include_recipe 'partition_resize'
 
 node['partition_resize-test']['types_to_test'].each do |type|
-  block_device = "#{node['partition_resize-test']['directory']}/#{type}_disk.img"
-  mount_point = "#{node['partition_resize-test']['directory']}/#{type}_disk"
+  block_device = block_device_path(type)
+  mount_point = mount_point_path(type)
 
   ruby_block "loop_partition_destroy(#{type})" do
     block do

@@ -23,4 +23,4 @@ r = ruby_block 'partition_resize' do
     Partition.resize_all
   end
 end
-r.run_action(:create) if node['partition_resize']['compiletime']
+r.run_action(:run) if node['partition_resize']['compiletime']
