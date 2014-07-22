@@ -3,14 +3,17 @@ driver:
   name: vagrant
 
 provisioner:
-  name: chef_solo
+  name: chef_zero
 
 platforms:
-  - name: ubuntu-12.04
-  - name: centos-6.4
+- name: ubuntu-12.04
+- name: ubuntu-14.04
+- name: debian-7.4
+- name: centos-6.4
+- name: fedora-19
 
 suites:
-  - name: default
-    run_list:
-      - recipe[partition_resize-test::default]
-    attributes:
+- name: default
+  run_list:
+    - recipe[partition_resize-test::default]
+  attributes:

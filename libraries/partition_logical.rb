@@ -30,13 +30,13 @@ module PartitionResize
           Chef::Log.warn("#{self.class}: resize2fs already running, skipping")
           return false
         end
-        shell_out("e2fsck -f -y '#{device.gsub(/'/, '')}'").status.success?
+        shell_out("e2fsck -f -y '#{device.gsub(/'/, '')}'")
         shell_out("resize2fs '#{device.gsub(/'/, '')}'").status.success?
       end
 
       # must be mounted
       def xfs_size
-        cmd = shell_out("xfs_info '#{loop_device.gsub(/'/, '')}'")
+        cmd = shell_out("xfs_info '#{mount_point.gsub(/'/, '')}'")
         return unless cmd.status.success?
         cmd.stdout.split("\n").each do |line|
           next unless line =~ /^data\s+=\s+bsize=([0-9]+)\s+blocks=([0-9]+),/
