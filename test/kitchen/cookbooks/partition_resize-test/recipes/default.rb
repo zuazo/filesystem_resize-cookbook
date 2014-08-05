@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-node['partition_resize']['packages']['xfs'].each do |pkg|
+node['partition_resize-test']['packages']['xfs'].each do |pkg|
   (package pkg).run_action(:install)
 end
 
