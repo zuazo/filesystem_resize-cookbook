@@ -1,7 +1,6 @@
 TODO
 ====
 
-* Support for disks with multiple partitions.
 * LVM support.
-* Support for resize unmounted partitions.
+* Support for resize unmounted file systems.
 * Add RSpec unit tests for libraries.

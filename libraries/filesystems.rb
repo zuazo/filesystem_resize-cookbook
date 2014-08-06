@@ -2,9 +2,9 @@
 
 require 'chef/mixin/shell_out'
 
-module PartitionResize
-  # Cookbook Helper to resize partitions
-  class Partition
+module FilesystemResize
+  # Cookbook Helper to resize file systems
+  class Filesystems
     extend Chef::Mixin::ShellOut
 
     def initialize(dev)
@@ -12,8 +12,8 @@ module PartitionResize
     end
 
     def resize
-      physical = Physical.new(@device)
-      logical = Logical.new(@device)
+      physical = FilesystemDisk.new(@device)
+      logical = Filesystem.new(@device)
       if !physical.size.nil? && !logical.size.nil?
         Chef::Log.info("#{physical}: physical size: #{physical.size}, "\
           "logical size: #{logical.size}")
@@ -24,9 +24,9 @@ module PartitionResize
     end
 
     def self.resize_all
-      partitions = Physical.list
-      partitions.each do |dev|
-        Partition.new(dev).resize
+      devs = FilesystemDisk.list
+      devs.each do |dev|
+        Filesystem.new(dev).resize
       end
     end
 

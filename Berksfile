@@ -1,4 +1,4 @@
 site :opscode
 
 metadata
-cookbook 'partition_resize-test', path: './test/kitchen/cookbooks/partition_resize-test'
+cookbook 'fs_resize-test', path: './test/kitchen/cookbooks/fs_resize-test'

@@ -10,4 +10,4 @@ Contributing
 7. Push to the branch (`$ git push origin my-new-feature`).
 8. [Submit a Pull Request using Github](https://help.github.com/articles/creating-a-pull-request).
 
-Please do not hesitate to [open an issue](https://github.com/onddo/partition_resize-cookbook/issues/new) with any questions or problems.
+Please do not hesitate to [open an issue](https://github.com/onddo/fs_resize-cookbook/issues/new) with any questions or problems.

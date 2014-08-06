@@ -1,6 +1,6 @@
 # encoding: UTF-8
 #
-# Cookbook Name:: partition_resize
+# Cookbook Name:: fs_resize
 # Recipe:: default
 #
 # Copyright 2014, Onddo Labs, Sl.
@@ -18,10 +18,10 @@
 # limitations under the License.
 #
 
-r = ruby_block 'partition_resize' do
+r = ruby_block 'fs_resize' do
   block do
-    Chef::Recipe.send(:include, PartitionResize)
-    Partition.resize_all
+    Chef::Recipe.send(:include, FilesystemResize)
+    Filesystems.resize_all
   end
 end
-r.run_action(:run) if node['partition_resize']['compiletime']
+r.run_action(:run) if node['fs_resize']['compiletime']

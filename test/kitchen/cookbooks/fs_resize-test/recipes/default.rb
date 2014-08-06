@@ -1,6 +1,6 @@
 # encoding: UTF-8
 #
-# Cookbook Name:: partition_resize-test
+# Cookbook Name:: fs_resize-test
 # Recipe:: default
 #
 # Copyright 2014, Onddo Labs, Sl.
@@ -18,35 +18,35 @@
 # limitations under the License.
 #
 
-node['partition_resize-test']['packages']['xfs'].each do |pkg|
+node['fs_resize-test']['packages']['xfs'].each do |pkg|
   (package pkg).run_action(:install)
 end
 
 require 'chef/mixin/shell_out'
-Chef::Recipe.send(:include, PartitionResize)
+Chef::Recipe.send(:include, FilesystemResize)
 
 def block_device_path(type)
   ::File.join(
-    node['partition_resize-test']['directory'],
+    node['fs_resize-test']['directory'],
     "#{type}_disk.img"
   )
 end
 
 def mount_point_path(type)
   ::File.join(
-    node['partition_resize-test']['directory'],
+    node['fs_resize-test']['directory'],
     "#{type}_disk"
   )
 end
 
-node['partition_resize-test']['types_to_test'].each do |type|
+node['fs_resize-test']['types_to_test'].each do |type|
   block_device = block_device_path(type)
   mount_point = mount_point_path(type)
   size = 100 # MB
   mkfs_args =
     case type
     # Force mke2fs to create a filesystem, # even if the
-    # specified device is not a partition on a # block
+    # specified device is not a fs on a # block
     # special device. (only for ext2-4)
     when /^ext/ then %w(-F)
     # Force overwrite when an existing filesystem is
@@ -55,7 +55,7 @@ node['partition_resize-test']['types_to_test'].each do |type|
       %w(-f)
   end
 
-  ruby_block "loop_partition_create(#{type})" do
+  ruby_block "loop_fs_create(#{type})" do
     block do
       # cleaning
       Shell.run("umount #{mount_point} 2> /dev/null || true")
@@ -73,27 +73,27 @@ node['partition_resize-test']['types_to_test'].each do |type|
       Shell.run("mkdir -p #{mount_point}")
       Shell.run("mount -o loop #{block_device} #{mount_point}")
 
-      physical = Partition::Physical.new(block_device)
-      logical = Partition::Logical.new(block_device)
+      physical = FilesystemDisk.new(block_device)
+      logical = Filesystem.new(block_device)
       if physical.size == logical.size
-        fail "Partition size equal: #{block_device} (#{physical.size})"
+        fail "Filesystem size equal: #{block_device} (#{physical.size})"
       end
     end
   end
 end
 
-include_recipe 'partition_resize'
+include_recipe 'fs_resize'
 
-node['partition_resize-test']['types_to_test'].each do |type|
+node['fs_resize-test']['types_to_test'].each do |type|
   block_device = block_device_path(type)
   mount_point = mount_point_path(type)
 
-  ruby_block "loop_partition_destroy(#{type})" do
+  ruby_block "loop_fs_destroy(#{type})" do
     block do
-      physical = Partition::Physical.new(block_device)
-      logical = Partition::Logical.new(block_device)
+      physical = FilesystemDisk.new(block_device)
+      logical = Filesystem.new(block_device)
       unless physical.size == logical.size
-        fail "Partition not resized: #{block_device} "\
+        fail "Filesystem not resized: #{block_device} "\
           "(#{physical.size} == #{logical.size})"
       end
 

@@ -1,11 +1,13 @@
 Description
 ===========
-[![Cookbook Version](https://img.shields.io/cookbook/v/partition_resize.svg?style=flat)](https://supermarket.getchef.com/cookbooks/partition_resize)
-[![Dependency Status](http://img.shields.io/gemnasium/onddo/partition_resize-cookbook.svg?style=flat)](https://gemnasium.com/onddo/partition_resize-cookbook)
-[![Code Climate](http://img.shields.io/codeclimate/github/onddo/partition_resize-cookbook.svg?style=flat)](https://codeclimate.com/github/onddo/partition_resize-cookbook)
-[![Build Status](http://img.shields.io/travis/onddo/partition_resize-cookbook.svg?style=flat)](https://travis-ci.org/onddo/partition_resize-cookbook)
+[![Cookbook Version](https://img.shields.io/cookbook/v/fs_resize.svg?style=flat)](https://supermarket.getchef.com/cookbooks/fs_resize)
+[![Dependency Status](http://img.shields.io/gemnasium/onddo/fs_resize-cookbook.svg?style=flat)](https://gemnasium.com/onddo/fs_resize-cookbook)
+[![Code Climate](http://img.shields.io/codeclimate/github/onddo/fs_resize-cookbook.svg?style=flat)](https://codeclimate.com/github/onddo/fs_resize-cookbook)
+[![Build Status](http://img.shields.io/travis/onddo/fs_resize-cookbook.svg?style=flat)](https://travis-ci.org/onddo/fs_resize-cookbook)
 
-This Chef cookbook resizes partitions automatically when the underlying disk increases its size.
+This Chef cookbook Resizes the file system automatically when the underlying partition or disk increases its size.
+
+It is mainly oriented to work with disks in the cloud.
 
 Requirements
 ============
@@ -21,7 +23,7 @@ This cookbook has been tested on the following platforms:
 * RedHat
 * Ubuntu (>= 12.04)
 
-Please, [let us know](https://github.com/onddo/partition_resize-cookbook/issues/new?title=I%20have%20used%20it%20successfully%20on%20...) if you use it successfully on any other platform.
+Please, [let us know](https://github.com/onddo/fs_resize-cookbook/issues/new?title=I%20have%20used%20it%20successfully%20on%20...) if you use it successfully on any other platform.
 
 ## Applications:
 
@@ -31,7 +33,7 @@ The other required applications usually come with the operating system:
 
 * `lsblk`, `findmnt` and `losetup`: included inside **[util-linux](http://en.wikipedia.org/wiki/Util-linux) (&ge; 2.19)** package.
 * `pgrep`: included inside [procps-ng](http://sourceforge.net/projects/procps-ng/) package.
-* `e2fsck` and `dumpe2fs` for *ext3* and *ext4*: included inside [e2fsprogs](http://e2fsprogs.sourceforge.net/) package.
+* `e2fsck`, `dumpe2fs` and `resize2fs` for *ext3* and *ext4*: included inside [e2fsprogs](http://e2fsprogs.sourceforge.net/) package.
 * `xfs_info` and `xfs_growfs` for *XFS*: included inside [xfsprogs](http://oss.sgi.com/projects/xfs/) package.
 
 Attributes
@@ -44,8 +46,8 @@ Attributes
     <th>Default</th>
   </tr>
   <tr>
-    <td><code>node['partition_resize']['compiletime']</code></td>
-    <td>Resize the partitions at compile time.</td>
+    <td><code>node['fs_resize']['compiletime']</code></td>
+    <td>Resize the file systems at compile time.</td>
     <td><code>false</code></td>
   </tr>
 </table>
@@ -53,9 +55,9 @@ Attributes
 Recipes
 =======
 
-## partition_resize::default
+## fs_resize::default
 
-Resize mounted partitions.
+Resize mounted file systems.
 
 Usage
 =====
@@ -66,14 +68,14 @@ You can simply include it in a recipe:
 
 ```ruby
 # in your recipe
-include_recipe "partition_resize::default"
+include_recipe "fs_resize::default"
 ```
 
-Don't forget to include the `partition_resize` cookbook as a dependency in the metadata:
+Don't forget to include the `fs_resize` cookbook as a dependency in the metadata:
 
 ```ruby
 # metadata.rb
-depends "partition_resize"
+depends "fs_resize"
 ```
 
 ## Including in the Run List
@@ -86,7 +88,7 @@ Another alternative is to include it in your Run List:
   [...]
   "run_list": [
     [...]
-    "recipe[partition_resize]"
+    "recipe[fs_resize]"
   ]
 }
 ```
@@ -94,19 +96,19 @@ Another alternative is to include it in your Run List:
 Testing
 =======
 
-See [TESTING.md](https://github.com/onddo/partition_resize-cookbook/blob/master/TESTING.md).
+See [TESTING.md](https://github.com/onddo/fs_resize-cookbook/blob/master/TESTING.md).
 
 Contributing
 ============
 
-Please do not hesitate to [open an issue](https://github.com/onddo/partition_resize-cookbook/issues/new) with any questions or problems.
+Please do not hesitate to [open an issue](https://github.com/onddo/fs_resize-cookbook/issues/new) with any questions or problems.
 
-See [CONTRIBUTING.md](https://github.com/onddo/partition_resize-cookbook/blob/master/CONTRIBUTING.md).
+See [CONTRIBUTING.md](https://github.com/onddo/fs_resize-cookbook/blob/master/CONTRIBUTING.md).
 
 TODO
 ====
 
-See [TODO.md](https://github.com/onddo/partition_resize-cookbook/blob/master/TODO.md).
+See [TODO.md](https://github.com/onddo/fs_resize-cookbook/blob/master/TODO.md).
 
 License and Author
 ==================

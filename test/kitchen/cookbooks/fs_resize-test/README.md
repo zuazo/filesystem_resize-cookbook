@@ -1,4 +1,4 @@
-partition_resize-test Cookbook
+fs_resize-test Cookbook
 ==============================
 TODO: Enter the cookbook description here.
 
@@ -11,14 +11,14 @@ TODO: List your cookbook requirements. Be sure to include any requirements this 
 
 e.g.
 #### packages
-- `toaster` - partition_resize-test needs toaster to brown your bagel.
+- `toaster` - fs_resize-test needs toaster to brown your bagel.
 
 Attributes
 ----------
 TODO: List your cookbook attributes here.
 
 e.g.
-#### partition_resize-test::default
+#### fs_resize-test::default
 <table>
   <tr>
     <th>Key</th>
@@ -27,7 +27,7 @@ e.g.
     <th>Default</th>
   </tr>
   <tr>
-    <td><tt>['partition_resize-test']['bacon']</tt></td>
+    <td><tt>['fs_resize-test']['bacon']</tt></td>
     <td>Boolean</td>
     <td>whether to include bacon</td>
     <td><tt>true</tt></td>
@@ -36,17 +36,17 @@ e.g.
 
 Usage
 -----
-#### partition_resize-test::default
+#### fs_resize-test::default
 TODO: Write usage instructions for each cookbook.
 
 e.g.
-Just include `partition_resize-test` in your node's `run_list`:
+Just include `fs_resize-test` in your node's `run_list`:
 
 ```json
 {
   "name":"my_node",
   "run_list": [
-    "recipe[partition_resize-test]"
+    "recipe[fs_resize-test]"
   ]
 }
 ```

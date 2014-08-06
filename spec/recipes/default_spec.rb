@@ -19,18 +19,18 @@
 
 require 'spec_helper'
 
-describe 'partition_resize::default' do
+describe 'fs_resize::default' do
 
   context 'compiletime false' do
     let(:chef_run) do
       chef_runner = ChefSpec::Runner.new do |node|
-        node.set['partition_resize']['compiletime'] = false
+        node.set['fs_resize']['compiletime'] = false
       end
       chef_runner.converge(described_recipe)
     end
 
-    it 'should run partition resize at converge time' do
-      expect(chef_run).to run_ruby_block('partition_resize')
+    it 'should run fs resize at converge time' do
+      expect(chef_run).to run_ruby_block('fs_resize')
     end
 
   end
@@ -38,13 +38,13 @@ describe 'partition_resize::default' do
   context 'compiletime true' do
     let(:chef_run) do
       chef_runner = ChefSpec::Runner.new do |node|
-        node.set['partition_resize']['compiletime'] = true
+        node.set['fs_resize']['compiletime'] = true
       end
       chef_runner.converge(described_recipe)
     end
 
-    it 'should run partition resize at converge time' do
-      expect(chef_run).to run_ruby_block('partition_resize').at_compile_time
+    it 'should run fs resize at converge time' do
+      expect(chef_run).to run_ruby_block('fs_resize').at_compile_time
     end
 
   end
