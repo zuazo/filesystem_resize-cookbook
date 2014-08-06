@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 # Runs a shell command and returns the stdout
 module Shell
   extend Chef::Mixin::ShellOut

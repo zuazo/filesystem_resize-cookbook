@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require 'chef/mixin/shell_out'
 
 require 'forwardable'

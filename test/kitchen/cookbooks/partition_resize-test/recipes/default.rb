@@ -1,3 +1,4 @@
+# encoding: UTF-8
 #
 # Cookbook Name:: partition_resize-test
 # Recipe:: default

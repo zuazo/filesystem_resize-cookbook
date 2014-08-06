@@ -25,7 +25,9 @@ Please, [let us know](https://github.com/onddo/partition_resize-cookbook/issues/
 
 ## Applications:
 
-The required applications usually come with the operating system:
+* Ruby 1.9.3 or higher.
+
+The other required applications usually come with the operating system:
 
 * `lsblk`, `findmnt` and `losetup`: included inside **[util-linux](http://en.wikipedia.org/wiki/Util-linux) (&ge; 2.19)** package.
 * `pgrep`: included inside [procps-ng](http://sourceforge.net/projects/procps-ng/) package.

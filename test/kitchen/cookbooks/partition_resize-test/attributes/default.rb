@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 default['partition_resize-test']['packages']['xfs'] = %w(xfsprogs)
 
 default['partition_resize-test']['directory'] = '/root'

@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 module PartitionResize
   class Partition
     # This class represent the real disk partition from the physical point of

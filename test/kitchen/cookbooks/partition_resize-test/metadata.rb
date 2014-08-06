@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 name 'partition_resize-test'
 maintainer 'Onddo Labs, Sl.'
 maintainer_email 'team@onddo.com'
