@@ -32,7 +32,7 @@ The other required applications usually come with the operating system:
 * `lsblk`, `findmnt` and `losetup`: included inside **[util-linux](http://en.wikipedia.org/wiki/Util-linux) (&ge; 2.19)** package.
 * `pgrep`: included inside [procps-ng](http://sourceforge.net/projects/procps-ng/) package.
 * `e2fsck` and `dumpe2fs` for *ext3* and *ext4*: included inside [e2fsprogs](http://e2fsprogs.sourceforge.net/) package.
-* `xfs_info` and `xfs_growfs` fox *XFS*: included inside [xfsprogs](http://oss.sgi.com/projects/xfs/) package.
+* `xfs_info` and `xfs_growfs` for *XFS*: included inside [xfsprogs](http://oss.sgi.com/projects/xfs/) package.
 
 Attributes
 ==========
