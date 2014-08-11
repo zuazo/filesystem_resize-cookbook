@@ -9,7 +9,7 @@ Resize the file system automatically when the underlying partition or disk
 increases its size.
 EOS
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version '0.1.0'
+version '0.2.0' # WiP
 
 supports 'amazon', '>= 2012.03'
 supports 'centos', '>= 6.0'
