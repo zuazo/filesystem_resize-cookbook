@@ -5,14 +5,14 @@ Description
 [![Code Climate](http://img.shields.io/codeclimate/github/onddo/fs_resize-cookbook.svg?style=flat)](https://codeclimate.com/github/onddo/fs_resize-cookbook)
 [![Build Status](http://img.shields.io/travis/onddo/fs_resize-cookbook.svg?style=flat)](https://travis-ci.org/onddo/fs_resize-cookbook)
 
-This Chef cookbook Resizes the file system automatically when the underlying partition or disk increases its size.
+This Chef cookbook resizes the file system automatically when the underlying partition or disk increases its size.
 
-It is mainly oriented to work with disks in the cloud.
+It is mainly oriented to work with cloud or virtual servers where it is common to change the disk size.
 
 Requirements
 ============
 
-## Platform:
+## Platform Requirements
 
 This cookbook has been tested on the following platforms:
 
@@ -25,7 +25,7 @@ This cookbook has been tested on the following platforms:
 
 Please, [let us know](https://github.com/onddo/fs_resize-cookbook/issues/new?title=I%20have%20used%20it%20successfully%20on%20...) if you use it successfully on any other platform.
 
-## Applications:
+## Application Requirements
 
 * Ruby 1.9.3 or higher.
 
@@ -68,14 +68,14 @@ You can simply include it in a recipe:
 
 ```ruby
 # in your recipe
-include_recipe "fs_resize::default"
+include_recipe 'fs_resize'
 ```
 
 Don't forget to include the `fs_resize` cookbook as a dependency in the metadata:
 
 ```ruby
 # metadata.rb
-depends "fs_resize"
+depends 'fs_resize'
 ```
 
 ## Including in the Run List
