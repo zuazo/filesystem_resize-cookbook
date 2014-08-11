@@ -1,11 +1,11 @@
 # encoding: UTF-8
 
-name 'fs_resize-test'
+name 'filesystem_resize-test'
 maintainer 'Onddo Labs, Sl.'
 maintainer_email 'team@onddo.com'
 license 'Apache 2.0'
-description 'Installs/Configures fs_resize-test'
+description 'Installs/Configures filesystem_resize-test'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version '0.1.0'
 
-depends 'fs_resize'
+depends 'filesystem_resize'

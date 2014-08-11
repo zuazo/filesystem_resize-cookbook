@@ -19,18 +19,18 @@
 
 require 'spec_helper'
 
-describe 'fs_resize::default' do
+describe 'filesystem_resize::default' do
 
   context 'compiletime false' do
     let(:chef_run) do
       chef_runner = ChefSpec::Runner.new do |node|
-        node.set['fs_resize']['compiletime'] = false
+        node.set['filesystem_resize']['compiletime'] = false
       end
       chef_runner.converge(described_recipe)
     end
 
     it 'should run fs resize at converge time' do
-      expect(chef_run).to run_ruby_block('fs_resize')
+      expect(chef_run).to run_ruby_block('filesystem_resize')
     end
 
   end
@@ -38,13 +38,13 @@ describe 'fs_resize::default' do
   context 'compiletime true' do
     let(:chef_run) do
       chef_runner = ChefSpec::Runner.new do |node|
-        node.set['fs_resize']['compiletime'] = true
+        node.set['filesystem_resize']['compiletime'] = true
       end
       chef_runner.converge(described_recipe)
     end
 
     it 'should run fs resize at converge time' do
-      expect(chef_run).to run_ruby_block('fs_resize').at_compile_time
+      expect(chef_run).to run_ruby_block('filesystem_resize').at_compile_time
     end
 
   end

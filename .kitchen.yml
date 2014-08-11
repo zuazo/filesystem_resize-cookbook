@@ -15,5 +15,5 @@ platforms:
 suites:
 - name: default
   run_list:
-    - recipe[fs_resize-test::default]
+    - recipe[filesystem_resize-test::default]
   attributes:

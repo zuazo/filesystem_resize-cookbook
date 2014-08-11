@@ -1,11 +1,11 @@
-fs_resize CHANGELOG
+filesystem_resize CHANGELOG
 ==========================
 
-This file is used to list changes made in each version of the fs_resize cookbook.
+This file is used to list changes made in each version of the filesystem_resize cookbook.
 
 0.1.0
 -----
-- [your_name] - Initial release of fs_resize
+- [your_name] - Initial release of filesystem_resize
 
 - - -
 Check the [Markdown Syntax Guide](http://daringfireball.net/projects/markdown/syntax) for help with Markdown.

@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-name 'fs_resize'
+name 'filesystem_resize'
 maintainer 'Onddo Labs, Sl.'
 maintainer_email 'team@onddo.com'
 license 'Apache 2.0'
@@ -18,9 +18,9 @@ supports 'fedora'
 supports 'redhat'
 supports 'ubuntu', '>= 12.04'
 
-recipe 'fs_resize::default', 'Resize mounted file systems.'
+recipe 'filesystem_resize::default', 'Resize mounted file systems.'
 
-attribute 'fs_resize/compiletime',
+attribute 'filesystem_resize/compiletime',
           display_name: 'fs resize at compile time',
           description: 'Resize the file sistems at compile time.',
           choice: %w(true false),

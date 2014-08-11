@@ -1,9 +1,9 @@
 Description
 ===========
-[![Cookbook Version](https://img.shields.io/cookbook/v/fs_resize.svg?style=flat)](https://supermarket.getchef.com/cookbooks/fs_resize)
-[![Dependency Status](http://img.shields.io/gemnasium/onddo/fs_resize-cookbook.svg?style=flat)](https://gemnasium.com/onddo/fs_resize-cookbook)
-[![Code Climate](http://img.shields.io/codeclimate/github/onddo/fs_resize-cookbook.svg?style=flat)](https://codeclimate.com/github/onddo/fs_resize-cookbook)
-[![Build Status](http://img.shields.io/travis/onddo/fs_resize-cookbook.svg?style=flat)](https://travis-ci.org/onddo/fs_resize-cookbook)
+[![Cookbook Version](https://img.shields.io/cookbook/v/filesystem_resize.svg?style=flat)](https://supermarket.getchef.com/cookbooks/filesystem_resize)
+[![Dependency Status](http://img.shields.io/gemnasium/onddo/filesystem_resize-cookbook.svg?style=flat)](https://gemnasium.com/onddo/filesystem_resize-cookbook)
+[![Code Climate](http://img.shields.io/codeclimate/github/onddo/filesystem_resize-cookbook.svg?style=flat)](https://codeclimate.com/github/onddo/filesystem_resize-cookbook)
+[![Build Status](http://img.shields.io/travis/onddo/filesystem_resize-cookbook.svg?style=flat)](https://travis-ci.org/onddo/filesystem_resize-cookbook)
 
 This Chef cookbook resizes the file system automatically when the underlying partition or disk increases its size.
 
@@ -23,7 +23,7 @@ This cookbook has been tested on the following platforms:
 * RedHat
 * Ubuntu (>= 12.04)
 
-Please, [let us know](https://github.com/onddo/fs_resize-cookbook/issues/new?title=I%20have%20used%20it%20successfully%20on%20...) if you use it successfully on any other platform.
+Please, [let us know](https://github.com/onddo/filesystem_resize-cookbook/issues/new?title=I%20have%20used%20it%20successfully%20on%20...) if you use it successfully on any other platform.
 
 ## Application Requirements
 
@@ -46,7 +46,7 @@ Attributes
     <th>Default</th>
   </tr>
   <tr>
-    <td><code>node['fs_resize']['compiletime']</code></td>
+    <td><code>node['filesystem_resize']['compiletime']</code></td>
     <td>Resize the file systems at compile time.</td>
     <td><code>false</code></td>
   </tr>
@@ -55,7 +55,7 @@ Attributes
 Recipes
 =======
 
-## fs_resize::default
+## filesystem_resize::default
 
 Resize mounted file systems.
 
@@ -68,14 +68,14 @@ You can simply include it in a recipe:
 
 ```ruby
 # in your recipe
-include_recipe 'fs_resize'
+include_recipe 'filesystem_resize'
 ```
 
-Don't forget to include the `fs_resize` cookbook as a dependency in the metadata:
+Don't forget to include the `filesystem_resize` cookbook as a dependency in the metadata:
 
 ```ruby
 # metadata.rb
-depends 'fs_resize'
+depends 'filesystem_resize'
 ```
 
 ## Including in the Run List
@@ -88,7 +88,7 @@ Another alternative is to include it in your Run List:
   [...]
   "run_list": [
     [...]
-    "recipe[fs_resize]"
+    "recipe[filesystem_resize]"
   ]
 }
 ```
@@ -96,19 +96,19 @@ Another alternative is to include it in your Run List:
 Testing
 =======
 
-See [TESTING.md](https://github.com/onddo/fs_resize-cookbook/blob/master/TESTING.md).
+See [TESTING.md](https://github.com/onddo/filesystem_resize-cookbook/blob/master/TESTING.md).
 
 Contributing
 ============
 
-Please do not hesitate to [open an issue](https://github.com/onddo/fs_resize-cookbook/issues/new) with any questions or problems.
+Please do not hesitate to [open an issue](https://github.com/onddo/filesystem_resize-cookbook/issues/new) with any questions or problems.
 
-See [CONTRIBUTING.md](https://github.com/onddo/fs_resize-cookbook/blob/master/CONTRIBUTING.md).
+See [CONTRIBUTING.md](https://github.com/onddo/filesystem_resize-cookbook/blob/master/CONTRIBUTING.md).
 
 TODO
 ====
 
-See [TODO.md](https://github.com/onddo/fs_resize-cookbook/blob/master/TODO.md).
+See [TODO.md](https://github.com/onddo/filesystem_resize-cookbook/blob/master/TODO.md).
 
 License and Author
 ==================

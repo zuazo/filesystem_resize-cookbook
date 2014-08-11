@@ -46,7 +46,7 @@ module FilesystemResize
       end
     end
 
-    def xfs_resize
+    def xfilesystem_resize
       if command_running?('xfs_growfs')
         Chef::Log.warn("#{self.class}: xfs_growfs already running, skipping")
         return false
@@ -103,7 +103,7 @@ module FilesystemResize
       Chef::Log.debug("#{self} type: #{type}")
       case type
       when /^ext[0-9]+$/ then ext_resize
-      when 'xfs' then xfs_resize
+      when 'xfs' then xfilesystem_resize
       else
         Chef::Log.warn("#{self.class}: unknown fs type: #{type}")
         return false
