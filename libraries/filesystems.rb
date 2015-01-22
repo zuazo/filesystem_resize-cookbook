@@ -26,7 +26,7 @@ module FilesystemResize
     def self.resize_all
       devs = FilesystemDisk.list
       devs.each do |dev|
-        Filesystem.new(dev).resize
+        Filesystems.new(dev).resize
       end
     end
 
