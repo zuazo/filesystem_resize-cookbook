@@ -35,15 +35,17 @@ module FilesystemResize
       shell_out("resize2fs '#{device.gsub(/'/, '')}'").status.success?
     end
 
+    def xfs_info_parse
+      return unless line =~ /^data\s+=\s+bsize=([0-9]+)\s+blocks=([0-9]+),/
+      @block_size = Regexp.last_match[1].to_i
+      @block_count = Regexp.last_match[2].to_i
+    end
+
     # must be mounted
     def xfs_size
       cmd = shell_out("xfs_info '#{mount_point.gsub(/'/, '')}'")
       return unless cmd.status.success?
-      cmd.stdout.split("\n").each do |line|
-        next unless line =~ /^data\s+=\s+bsize=([0-9]+)\s+blocks=([0-9]+),/
-        @block_size = Regexp.last_match[1].to_i
-        @block_count = Regexp.last_match[2].to_i
-      end
+      cmd.stdout.split("\n").each { |line| xfs_info_parse(line) }
     end
 
     def xfilesystem_resize
@@ -80,11 +82,7 @@ module FilesystemResize
 
     def type
       @type ||= begin
-        if file_type =~ / ([^ ]+) filesystem /
-          Regexp.last_match[1].downcase
-        else
-          nil
-        end
+        Regexp.last_match[1].downcase if file_type =~ / ([^ ]+) filesystem /
       end
     end
 

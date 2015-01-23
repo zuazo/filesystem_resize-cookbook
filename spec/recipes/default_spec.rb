@@ -19,14 +19,6 @@
 
 require 'spec_helper'
 
-def stub_shell_out(cmd)
-  output = FakeShellOut.new
-  allow_any_instance_of(Chef::Mixin::ShellOut).to receive(:shell_out)
-    .with(cmd)
-    .and_return(output)
-  output
-end
-
 describe 'filesystem_resize::default' do
   before do
     stub_shell_out('losetup -a')
@@ -50,10 +42,9 @@ describe 'filesystem_resize::default' do
       chef_runner.converge(described_recipe)
     end
 
-    it 'should run fs resize at converge time' do
+    it 'runs fs resize at converge time' do
       expect(chef_run).to run_ruby_block('filesystem_resize')
     end
-
   end
 
   context 'compiletime true' do
@@ -64,10 +55,8 @@ describe 'filesystem_resize::default' do
       chef_runner.converge(described_recipe)
     end
 
-    it 'should run fs resize at converge time' do
+    it 'runs fs resize at converge time' do
       expect(chef_run).to run_ruby_block('filesystem_resize').at_compile_time
     end
-
   end
-
 end

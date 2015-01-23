@@ -21,11 +21,7 @@ module FilesystemResize
       @size ||= begin
         line = lsblk_block.split("\n")[0]
         dev = ::File.basename(block_device)
-        if line =~ /^#{Regexp.escape(dev)}\s([0-9]+)/
-          Regexp.last_match[1].to_i
-        else
-          nil
-        end
+        Regexp.last_match[1].to_i if line =~ /^#{Regexp.escape(dev)}\s([0-9]+)/
       end
     end
 
