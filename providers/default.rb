@@ -1,9 +1,10 @@
 # encoding: UTF-8
 #
 # Cookbook Name:: filesystem_resize
-# Recipe:: default
-#
-# Copyright 2014-2015, Onddo Labs, Sl.
+# Provider:: default
+# Author:: Xabier de Zuazo (<xabier@onddo.com>)
+# Copyright:: Copyright (c) 2015 Onddo Labs, SL. (www.onddo.com)
+# License:: Apache License, Version 2.0
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,5 +19,17 @@
 # limitations under the License.
 #
 
-r = filesystem_resize_all 'default'
-r.run_action(:run) if node['filesystem_resize']['compiletime']
+use_inline_resources if self.respond_to?(:use_inline_resources)
+
+def whyrun_supported?
+  true
+end
+
+action :run do
+  fs = FilesystemResizeCookbook::Filesystems.new(new_resource.device)
+  if fs.resize?
+    converge_by("Create #{new_resource}") do
+      fs.resize
+    end
+  end
+end

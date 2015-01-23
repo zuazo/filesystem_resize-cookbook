@@ -2,7 +2,7 @@
 
 require 'chef/mixin/shell_out'
 
-module FilesystemResize
+module FilesystemResizeCookbook
   # Cookbook Helper to resize file systems
   class Filesystems
     extend Chef::Mixin::ShellOut
@@ -20,31 +20,26 @@ module FilesystemResize
     end
 
     def resize?
-      !physical.size.nil? && !logical.size.nil? &&
-        physical.size > logical.size
+      block_size = logical.block_size
+      logical_blocks = logical.block_count
+      if block_size.nil? || logical_blocks.nil? || physical.size.nil?
+        return false
+      end
+      physical_blocks = (physical.size / block_size).ceil
+      physical_blocks > logical_blocks
     end
 
     def resize
-      if resize?
-        Chef::Log.info("#{physical}: physical size: #{physical.size}, "\
-          "logical size: #{logical.size}")
-        logical.resize
-      else
-        false
-      end
+      return false unless resize?
+      Chef::Log.info("#{physical}: physical size: #{physical.size}, "\
+        "logical size: #{logical.size}")
+      logical.resize
     end
 
     def self.resize_any?
       devs = FilesystemDisk.list
       devs.reduce(false) do |r, dev|
         r || Filesystems.new(dev).resize?
-      end
-    end
-
-    def self.resize_all
-      devs = FilesystemDisk.list
-      devs.reduce(false) do |r, dev|
-        Filesystems.new(dev).resize || r
       end
     end
 

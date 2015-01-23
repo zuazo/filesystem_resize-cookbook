@@ -39,25 +39,41 @@ The other required applications usually come with the operating system:
 Attributes
 ==========
 
-<table>
-  <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Default</th>
-  </tr>
-  <tr>
-    <td><code>node['filesystem_resize']['compiletime']</code></td>
-    <td>Resize the file systems at compile time.</td>
-    <td><code>false</code></td>
-  </tr>
-</table>
+| Parameter                                  | Default | Description                              |
+|:-------------------------------------------|:--------|:-----------------------------------------|
+| `node['filesystem_resize']['compiletime']` | `false` | Resize the file systems at compile time.
 
 Recipes
 =======
 
 ## filesystem_resize::default
 
-Resize mounted file systems.
+Resizes all mounted file systems.
+
+Resources
+=========
+
+## filesystem_resize(device)
+
+Resizes a partition.
+
+### filesystem_resize Actions
+
+* `run` (default)
+
+### filesystem_resize Parameters
+
+| Parameter | Default           | Description                              |
+|:----------|:------------------|:-----------------------------------------|
+| device    | *resource name*   | Device full path.
+
+## filesystem_resize_all(name)
+
+Resizes all mounted file systems.
+
+### filesystem_resize Actions
+
+* `run` (default)
 
 Usage
 =====
@@ -97,6 +113,42 @@ Testing
 =======
 
 See [TESTING.md](https://github.com/onddo/filesystem_resize-cookbook/blob/master/TESTING.md).
+
+## ChefSpec Matchers
+
+### filesystem_resize(device)
+
+Helper method for locating a `filesystem_resize` resource in the collection.
+
+```ruby
+resource = chef_run.filesystem_resize('/dev/sda1')
+expect(resource).to notify('service[apache2]').to(:restart)
+```
+
+### run_filesystem_resize(device)
+
+Assert that the Chef Run runs `filesystem_resize`.
+
+```ruby
+expect(chef_run).to run_filesystem_resize('/dev/sda1')
+```
+
+### filesystem_resize_all(name)
+
+Helper method for locating a `filesystem_resize_all` resource in the collection.
+
+```ruby
+resource = chef_run.filesystem_resize_all('default')
+expect(resource).to notify('service[apache2]').to(:restart)
+```
+
+### run_filesystem_resize_all(name)
+
+Assert that the Chef Run runs `filesystem_resize`.
+
+```ruby
+expect(chef_run).to run_filesystem_resize_all('default')
+```
 
 Contributing
 ============

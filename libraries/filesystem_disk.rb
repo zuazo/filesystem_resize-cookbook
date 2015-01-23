@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-module FilesystemResize
+module FilesystemResizeCookbook
   # This class represent the underlying partition from the physical point of
   # view. If the physical partition is resized will be reflected here.
   class FilesystemDisk < DiskDeviceBase

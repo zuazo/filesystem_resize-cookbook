@@ -3,7 +3,7 @@
 # Cookbook Name:: filesystem_resize-test
 # Recipe:: default
 #
-# Copyright 2014, Onddo Labs, Sl.
+# Copyright 2014-2015, Onddo Labs, Sl.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ node['filesystem_resize-test']['packages']['xfs'].each do |pkg|
 end
 
 require 'chef/mixin/shell_out'
-Chef::Recipe.send(:include, FilesystemResize)
+Chef::Recipe.send(:include, FilesystemResizeCookbook)
 
 def block_device_path(type)
   ::File.join(

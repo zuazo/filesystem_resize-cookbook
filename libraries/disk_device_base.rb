@@ -1,10 +1,9 @@
 # encoding: UTF-8
 
 require 'chef/mixin/shell_out'
-
 require 'forwardable'
 
-module FilesystemResize
+module FilesystemResizeCookbook
   # Disk device type abstract base class
   class DiskDeviceBase
     extend Forwardable

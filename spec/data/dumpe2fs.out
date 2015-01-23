@@ -1,20 +1,20 @@
-dumpe2fs 1.42.9 (28-Dec-2013)
-Filesystem volume name:   /
+dumpe2fs 1.42.5 (29-Jul-2012)
+Filesystem volume name:   <none>
 Last mounted on:          /
-Filesystem UUID:          73947a77-ddbe-4dc7-bd8f-3fe0bc840778
+Filesystem UUID:          5eb096da-8bac-46b8-abe7-25ae5d6eb91d
 Filesystem magic number:  0xEF53
 Filesystem revision #:    1 (dynamic)
 Filesystem features:      has_journal ext_attr resize_inode dir_index filetype needs_recovery extent flex_bg sparse_super large_file huge_file uninit_bg dir_nlink extra_isize
 Filesystem flags:         signed_directory_hash 
-Default mount options:    (none)
+Default mount options:    user_xattr acl
 Filesystem state:         clean
 Errors behavior:          Continue
 Filesystem OS type:       Linux
 Inode count:              524288
-Block count:              2096635
-Reserved block count:     20966
-Free blocks:              1809216
-Free inodes:              491326
+Block count:              2097152
+Reserved block count:     104857
+Free blocks:              1929739
+Free inodes:              508700
 First block:              0
 Block size:               4096
 Fragment size:            4096
@@ -24,14 +24,14 @@ Fragments per group:      32768
 Inodes per group:         8192
 Inode blocks per group:   512
 Flex block group size:    16
-Filesystem created:       Wed Oct  8 01:24:47 2014
-Last mount time:          Fri Jan 23 08:50:50 2015
-Last write time:          Fri Jan 23 08:50:50 2015
+Filesystem created:       Tue May 28 23:39:03 2013
+Last mount time:          Fri Jan 23 12:38:36 2015
+Last write time:          Fri Jan 23 12:38:36 2015
 Mount count:              2
-Maximum mount count:      37
-Last checked:             Wed Oct  8 01:24:47 2014
+Maximum mount count:      -1
+Last checked:             Tue May 28 23:39:03 2013
 Check interval:           0 (<none>)
-Lifetime writes:          1876 MB
+Lifetime writes:          1449 MB
 Reserved blocks uid:      0 (user root)
 Reserved blocks gid:      0 (group root)
 First inode:              11
@@ -40,11 +40,11 @@ Required extra isize:     28
 Desired extra isize:      28
 Journal inode:            8
 Default directory hash:   half_md4
-Directory Hash Seed:      20fcc4d2-749e-41d2-8845-be99109aacb3
+Directory Hash Seed:      4e40b76d-aba6-4c81-892f-7de5c21fabcb
 Journal backup:           inode blocks
 Journal features:         journal_incompat_revoke
 Journal size:             128M
 Journal length:           32768
-Journal sequence:         0x000000c1
+Journal sequence:         0x00001302
 Journal start:            1
 

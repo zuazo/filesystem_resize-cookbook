@@ -18,7 +18,10 @@ supports 'fedora'
 supports 'redhat'
 supports 'ubuntu', '>= 12.04'
 
-recipe 'filesystem_resize::default', 'Resize mounted file systems.'
+recipe 'filesystem_resize::default', 'Resizes all mounted file systems.'
+
+provides 'filesystem_resize'
+provides 'filesystem_resize_all'
 
 attribute 'filesystem_resize/compiletime',
           display_name: 'fs resize at compile time',
