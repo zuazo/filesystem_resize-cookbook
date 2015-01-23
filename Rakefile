@@ -1,7 +1,9 @@
 # encoding: UTF-8
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
-# Based on magic_shell cookbook code, thanks Seth.
+# Based on magic_shell cookbook code, thanks @sethvargo.
+
+# More info at https://github.com/jimweirich/rake/blob/master/doc/rakefile.rdoc
 
 require 'bundler/setup'
 
@@ -24,9 +26,9 @@ RSpec::Core::RakeTask.new(:unit) do |t|
   t.rspec_opts = '--color --format progress'
 end
 
-require 'kitchen'
 desc 'Run Test Kitchen integration tests'
 task :integration do
+  require 'kitchen'
   Kitchen.logger = Kitchen.default_file_logger
   Kitchen::Config.new.instances.each do |instance|
     instance.test(:always)
