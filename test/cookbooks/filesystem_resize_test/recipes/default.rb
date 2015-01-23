@@ -1,6 +1,6 @@
 # encoding: UTF-8
 #
-# Cookbook Name:: filesystem_resize-test
+# Cookbook Name:: filesystem_resize_test
 # Recipe:: default
 #
 # Copyright 2014-2015, Onddo Labs, Sl.
@@ -18,7 +18,7 @@
 # limitations under the License.
 #
 
-node['filesystem_resize-test']['packages']['xfs'].each do |pkg|
+node['filesystem_resize_test']['packages']['xfs'].each do |pkg|
   (package pkg).run_action(:install)
 end
 
@@ -27,19 +27,19 @@ Chef::Recipe.send(:include, FilesystemResizeCookbook)
 
 def block_device_path(type)
   ::File.join(
-    node['filesystem_resize-test']['directory'],
+    node['filesystem_resize_test']['directory'],
     "#{type}_disk.img"
   )
 end
 
 def mount_point_path(type)
   ::File.join(
-    node['filesystem_resize-test']['directory'],
+    node['filesystem_resize_test']['directory'],
     "#{type}_disk"
   )
 end
 
-node['filesystem_resize-test']['types_to_test'].each do |type|
+node['filesystem_resize_test']['types_to_test'].each do |type|
   block_device = block_device_path(type)
   mount_point = mount_point_path(type)
   size = 100 # MB
@@ -84,7 +84,7 @@ end
 
 include_recipe 'filesystem_resize'
 
-node['filesystem_resize-test']['types_to_test'].each do |type|
+node['filesystem_resize_test']['types_to_test'].each do |type|
   block_device = block_device_path(type)
   mount_point = mount_point_path(type)
 
