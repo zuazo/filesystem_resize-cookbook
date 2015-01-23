@@ -1,7 +1,7 @@
 # encoding: UTF-8
 #
 # Author:: Xabier de Zuazo (<xabier@onddo.com>)
-# Copyright:: Copyright (c) 2014 Onddo Labs, SL. (www.onddo.com)
+# Copyright:: Copyright (c) 2015 Onddo Labs, SL. (www.onddo.com)
 # License:: Apache License, Version 2.0
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,7 +19,28 @@
 
 require 'spec_helper'
 
+def stub_shell_out(cmd)
+  output = FakeShellOut.new
+  allow_any_instance_of(Chef::Mixin::ShellOut).to receive(:shell_out)
+    .with(cmd)
+    .and_return(output)
+  output
+end
+
 describe 'filesystem_resize::default' do
+  before do
+    stub_shell_out('losetup -a')
+    stub_shell_out('lsblk --raw --noheadings --output NAME')
+      .and_return_stdout(data_file('lsblk_ok.out'))
+    stub_shell_out("losetup -j '/dev/xvda1'")
+    stub_shell_out(
+      "lsblk --bytes --raw --noheadings --output NAME,SIZE '/dev/xvda1'"
+    ).and_return_stdout(data_file('lsblk_size_ok.out'))
+    stub_shell_out("file --special-files --dereference '/dev/xvda1'")
+      .and_return_stdout(data_file('file_ok.out'))
+    stub_shell_out("dumpe2fs -h '/dev/xvda1'")
+      .and_return_stdout(data_file('dumpe2fs_ok.out'))
+  end
 
   context 'compiletime false' do
     let(:chef_run) do

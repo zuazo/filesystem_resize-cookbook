@@ -11,22 +11,40 @@ module FilesystemResize
       @device = dev
     end
 
+    def physical
+      @physical ||= FilesystemDisk.new(@device)
+    end
+
+    def logical
+      @logical ||= Filesystem.new(@device)
+    end
+
+    def resize?
+      !physical.size.nil? && !logical.size.nil? &&
+        physical.size > logical.size
+    end
+
     def resize
-      physical = FilesystemDisk.new(@device)
-      logical = Filesystem.new(@device)
-      if !physical.size.nil? && !logical.size.nil?
+      if resize?
         Chef::Log.info("#{physical}: physical size: #{physical.size}, "\
           "logical size: #{logical.size}")
-        logical.resize if physical.size > logical.size
+        logical.resize
       else
         false
       end
     end
 
+    def self.resize_any?
+      devs = FilesystemDisk.list
+      devs.reduce(false) do |r, dev|
+        r || Filesystems.new(dev).resize?
+      end
+    end
+
     def self.resize_all
       devs = FilesystemDisk.list
-      devs.each do |dev|
-        Filesystems.new(dev).resize
+      devs.reduce(false) do |r, dev|
+        Filesystems.new(dev).resize || r
       end
     end
 

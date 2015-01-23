@@ -19,9 +19,8 @@
 #
 
 r = ruby_block 'filesystem_resize' do
-  block do
-    Chef::Recipe.send(:include, FilesystemResize)
-    Filesystems.resize_all
-  end
+  Chef::Recipe.send(:include, FilesystemResize)
+  block { Filesystems.resize_all }
+  only_if { Filesystems.resize_any? }
 end
 r.run_action(:run) if node['filesystem_resize']['compiletime']

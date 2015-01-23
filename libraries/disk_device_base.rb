@@ -25,7 +25,7 @@ module FilesystemResize
     end
 
     def self.shell_out(*args)
-      cmd = super(args)
+      cmd = super(*args)
       Chef::Log.debug("#shell_out: #{args[0]}")
       unless cmd.status.success?
         Chef::Log.info("#shell_out #{args[0]} (STDOUT): #{cmd.stdout}")
