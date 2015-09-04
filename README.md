@@ -1,6 +1,6 @@
 Description
 ===========
-[![Cookbook Version](https://img.shields.io/cookbook/v/filesystem_resize.svg?style=flat)](https://supermarket.getchef.com/cookbooks/filesystem_resize)
+[![Cookbook Version](https://img.shields.io/cookbook/v/filesystem_resize.svg?style=flat)](https://supermarket.chef.io/cookbooks/filesystem_resize)
 [![Dependency Status](http://img.shields.io/gemnasium/onddo/filesystem_resize-cookbook.svg?style=flat)](https://gemnasium.com/onddo/filesystem_resize-cookbook)
 [![Code Climate](http://img.shields.io/codeclimate/github/onddo/filesystem_resize-cookbook.svg?style=flat)](https://codeclimate.com/github/onddo/filesystem_resize-cookbook)
 [![Build Status](http://img.shields.io/travis/onddo/filesystem_resize-cookbook.svg?style=flat)](https://travis-ci.org/onddo/filesystem_resize-cookbook)
