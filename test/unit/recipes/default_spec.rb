@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-require 'spec_helper'
+require_relative '../spec_helper'
 
 describe 'filesystem_resize::default' do
   let(:chef_runner) { ChefSpec::ServerRunner.new }

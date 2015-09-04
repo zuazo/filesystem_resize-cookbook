@@ -39,6 +39,7 @@ task :clean do
     Berksfile.lock
     .bundle
     .cache
+    coverage
     Gemfile.lock
     .kitchen
     metadata.json
@@ -74,7 +75,7 @@ task :unit do
   require 'rspec/core/rake_task'
   RSpec::Core::RakeTask.new(:unit) do |t|
     t.rspec_opts = '--color --format progress'
-    t.pattern = 'spec/**{,/*/**}/*_spec.rb'
+    t.pattern = 'test/unit/**{,/*/**}/*_spec.rb'
   end
 end
 
