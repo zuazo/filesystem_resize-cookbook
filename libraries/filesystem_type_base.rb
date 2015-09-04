@@ -43,7 +43,7 @@ module FilesystemResizeCookbook
     end
 
     def command_running?(cmd)
-      shell_out("pgrep '#{cmd.gsub(/'/, '')}'").status.success?
+      shell_out("pgrep '#{cmd.delete("'")}'").status.success?
     end
 
     def mount_point
@@ -51,7 +51,7 @@ module FilesystemResizeCookbook
         cmd = shell_out(
           'findmnt --list --first-only --canonicalize --evaluate '\
           '--noheadings --output TARGET '\
-          "'#{@block_device.gsub(/'/, '')}'"
+          "'#{@block_device.delete("'")}'"
         )
         cmd.status.success? ? cmd.stdout.split("\n")[0] : nil
       end

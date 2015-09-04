@@ -29,7 +29,7 @@ module FilesystemResizeCookbook
     end
 
     def lsblk_block
-      path = block_device.gsub(/'/, '')
+      path = block_device.delete("'")
       cmd = shell_out(
         "lsblk --bytes --raw --noheadings --output NAME,SIZE '#{path}'"
       )
@@ -46,7 +46,7 @@ module FilesystemResizeCookbook
 
     def self.list
       lsblk_list.split("\n").each_with_object([]) do |name, devs|
-        dev = name =~ /^\// ? name : "/dev/#{name}"
+        dev = name =~ %r{^/} ? name : "/dev/#{name}"
         devs << dev
         devs.delete(Regexp.last_match[1]) if dev =~ /^([^0-9]+)[0-9]+$/
       end

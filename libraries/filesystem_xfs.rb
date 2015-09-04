@@ -32,7 +32,7 @@ module FilesystemResizeCookbook
 
     # must be mounted
     def size_parse
-      cmd = shell_out("xfs_info '#{mount_point.gsub(/'/, '')}'")
+      cmd = shell_out("xfs_info '#{mount_point.delete("'")}'")
       return unless cmd.status.success?
       cmd.stdout.split("\n").each { |line| xfs_info_parse(line) }
     end
@@ -46,7 +46,7 @@ module FilesystemResizeCookbook
           "#{self.class}: mount point not found for #{self}, skipping")
         return false
       end
-      shell_out("xfs_growfs -d '#{mount_point.gsub(/'/, '')}'")
+      shell_out("xfs_growfs -d '#{mount_point.delete("'")}'")
         .status.success?
     end
   end

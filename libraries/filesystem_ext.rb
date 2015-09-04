@@ -34,7 +34,7 @@ module FilesystemResizeCookbook
     end
 
     def size_parse
-      cmd = shell_out("dumpe2fs -h '#{@device.gsub(/'/, '')}'")
+      cmd = shell_out("dumpe2fs -h '#{@device.delete("'")}'")
       return unless cmd.status.success?
       cmd.stdout.split("\n").each { |line| dumpe2fs_parse(line) }
     end
@@ -44,8 +44,8 @@ module FilesystemResizeCookbook
         Chef::Log.warn("#{self.class}: resize2fs already running, skipping")
         return false
       end
-      shell_out("e2fsck -f -y '#{@device.gsub(/'/, '')}'")
-      shell_out("resize2fs '#{@device.gsub(/'/, '')}'").status.success?
+      shell_out("e2fsck -f -y '#{@device.delete("'")}'")
+      shell_out("resize2fs '#{@device.delete("'")}'").status.success?
     end
   end
 end

@@ -43,7 +43,7 @@ module FilesystemResizeCookbook
 
     def file_type
       cmd = shell_out(
-        "file --special-files --dereference '#{device.gsub(/'/, '')}'"
+        "file --special-files --dereference '#{device.delete("'")}'"
       )
       return nil unless cmd.status.success?
       cmd.stdout.split("\n")[0]

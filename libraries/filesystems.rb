@@ -74,7 +74,7 @@ module FilesystemResizeCookbook
     end
 
     def self.to_loop(dev)
-      cmd = shell_out("losetup -j '#{dev.gsub(/'/, '')}'")
+      cmd = shell_out("losetup -j '#{dev.delete("'")}'")
       if cmd.status.success?
         lo_dev = cmd.stdout.split(':', 2)[0]
         return lo_dev unless lo_dev.nil? || lo_dev.length == 0
