@@ -27,7 +27,7 @@ Resize the file system automatically when the underlying partition or disk
 increases its size.
 EOS
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version '0.3.0' # WiP
+version '0.3.0'
 
 if respond_to?(:source_url)
   source_url "https://github.com/zuazo/#{name}-cookbook"
