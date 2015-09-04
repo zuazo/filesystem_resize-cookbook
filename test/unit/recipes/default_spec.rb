@@ -20,7 +20,7 @@
 require_relative '../spec_helper'
 
 describe 'filesystem_resize::default' do
-  let(:chef_runner) { ChefSpec::ServerRunner.new }
+  let(:chef_runner) { ChefSpec::SoloRunner.new }
   let(:chef_run) { chef_runner.converge(described_recipe) }
   let(:node) { chef_runner.node }
 
@@ -44,7 +44,7 @@ describe 'filesystem_resize::default' do
 
   context 'inside filesystem_resize_all resource' do
     let(:chef_runner) do
-      ChefSpec::ServerRunner.new(step_into: %w(filesystem_resize_all))
+      ChefSpec::SoloRunner.new(step_into: %w(filesystem_resize_all))
     end
     before do
       stub_shell_out('lsblk --raw --noheadings --output NAME')
