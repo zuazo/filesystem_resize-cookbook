@@ -1,11 +1,11 @@
-Description
-===========
+Filesystem Resize Cookbook
+==========================
 [![Cookbook Version](https://img.shields.io/cookbook/v/filesystem_resize.svg?style=flat)](https://supermarket.chef.io/cookbooks/filesystem_resize)
 [![Dependency Status](http://img.shields.io/gemnasium/zuazo/filesystem_resize-cookbook.svg?style=flat)](https://gemnasium.com/zuazo/filesystem_resize-cookbook)
 [![Code Climate](http://img.shields.io/codeclimate/github/zuazo/filesystem_resize-cookbook.svg?style=flat)](https://codeclimate.com/github/zuazo/filesystem_resize-cookbook)
 [![Build Status](http://img.shields.io/travis/zuazo/filesystem_resize-cookbook.svg?style=flat)](https://travis-ci.org/zuazo/filesystem_resize-cookbook)
 
-This Chef cookbook resizes the file system automatically when the underlying partition or disk increases its size.
+This [Chef](https://www.chef.io/) cookbook resizes the file system automatically when the underlying partition or disk increases its size.
 
 It is mainly oriented to work with cloud or virtual servers where it is common to change the disk size.
 
