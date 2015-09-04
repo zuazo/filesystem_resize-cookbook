@@ -11,7 +11,6 @@
 # rake doc                      # Generate Ruby documentation
 # rake integration              # Run Test Kitchen integration tests
 # rake integration:cloud        # Run Test Kitchen tests in the cloud
-# rake integration:docker       # Run Test Kitchen tests using docker
 # rake integration:vagrant      # Run Test Kitchen tests using vagrant
 # rake style                    # Run all style checks
 # rake style:chef               # Run Chef style checks using foodcritic
@@ -101,11 +100,6 @@ namespace :integration do
     run_kitchen
   end
 
-  desc 'Run Test Kitchen integration tests using docker'
-  task :docker do
-    run_kitchen(local_config: '.kitchen.docker.yml')
-  end
-
   desc 'Run Test Kitchen integration tests in the cloud'
   task :cloud do
     run_kitchen(local_config: '.kitchen.cloud.yml')
@@ -113,7 +107,7 @@ namespace :integration do
 end
 
 desc 'Run Test Kitchen integration tests'
-task integration: travis? ? %w(integration:docker) : %w(integration:vagrant)
+task integration: %w(integration:vagrant)
 
 desc 'Run doc, style, unit and integration tests'
 task default: %w(doc style unit integration)

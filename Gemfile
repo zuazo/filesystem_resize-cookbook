@@ -35,10 +35,6 @@ group :integration do
   gem 'test-kitchen', '~> 1.4'
 end
 
-group :integration_docker do
-  gem 'kitchen-docker', '~> 2.1'
-end
-
 group :integration_vagrant do
   gem 'vagrant-wrapper', '~> 2.0'
   gem 'kitchen-vagrant', '~> 0.10'
