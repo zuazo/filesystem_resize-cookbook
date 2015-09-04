@@ -1,9 +1,9 @@
 Description
 ===========
 [![Cookbook Version](https://img.shields.io/cookbook/v/filesystem_resize.svg?style=flat)](https://supermarket.chef.io/cookbooks/filesystem_resize)
-[![Dependency Status](http://img.shields.io/gemnasium/onddo/filesystem_resize-cookbook.svg?style=flat)](https://gemnasium.com/onddo/filesystem_resize-cookbook)
-[![Code Climate](http://img.shields.io/codeclimate/github/onddo/filesystem_resize-cookbook.svg?style=flat)](https://codeclimate.com/github/onddo/filesystem_resize-cookbook)
-[![Build Status](http://img.shields.io/travis/onddo/filesystem_resize-cookbook.svg?style=flat)](https://travis-ci.org/onddo/filesystem_resize-cookbook)
+[![Dependency Status](http://img.shields.io/gemnasium/zuazo/filesystem_resize-cookbook.svg?style=flat)](https://gemnasium.com/zuazo/filesystem_resize-cookbook)
+[![Code Climate](http://img.shields.io/codeclimate/github/zuazo/filesystem_resize-cookbook.svg?style=flat)](https://codeclimate.com/github/zuazo/filesystem_resize-cookbook)
+[![Build Status](http://img.shields.io/travis/zuazo/filesystem_resize-cookbook.svg?style=flat)](https://travis-ci.org/zuazo/filesystem_resize-cookbook)
 
 This Chef cookbook resizes the file system automatically when the underlying partition or disk increases its size.
 
@@ -23,7 +23,7 @@ This cookbook has been tested on the following platforms:
 * RedHat
 * Ubuntu (>= 12.04)
 
-Please, [let us know](https://github.com/onddo/filesystem_resize-cookbook/issues/new?title=I%20have%20used%20it%20successfully%20on%20...) if you use it successfully on any other platform.
+Please, [let us know](https://github.com/zuazo/filesystem_resize-cookbook/issues/new?title=I%20have%20used%20it%20successfully%20on%20...) if you use it successfully on any other platform.
 
 ## Application Requirements
 
@@ -100,7 +100,7 @@ Another alternative is to include it in your Run List:
 
 ```json
 {
-  "name": "app001.onddo.com",
+  "name": "app001.example.com",
   [...]
   "run_list": [
     [...]
@@ -112,7 +112,7 @@ Another alternative is to include it in your Run List:
 Testing
 =======
 
-See [TESTING.md](https://github.com/onddo/filesystem_resize-cookbook/blob/master/TESTING.md).
+See [TESTING.md](https://github.com/zuazo/filesystem_resize-cookbook/blob/master/TESTING.md).
 
 ## ChefSpec Matchers
 
@@ -153,22 +153,23 @@ expect(chef_run).to run_filesystem_resize_all('default')
 Contributing
 ============
 
-Please do not hesitate to [open an issue](https://github.com/onddo/filesystem_resize-cookbook/issues/new) with any questions or problems.
+Please do not hesitate to [open an issue](https://github.com/zuazo/filesystem_resize-cookbook/issues/new) with any questions or problems.
 
-See [CONTRIBUTING.md](https://github.com/onddo/filesystem_resize-cookbook/blob/master/CONTRIBUTING.md).
+See [CONTRIBUTING.md](https://github.com/zuazo/filesystem_resize-cookbook/blob/master/CONTRIBUTING.md).
 
 TODO
 ====
 
-See [TODO.md](https://github.com/onddo/filesystem_resize-cookbook/blob/master/TODO.md).
+See [TODO.md](https://github.com/zuazo/filesystem_resize-cookbook/blob/master/TODO.md).
 
 License and Author
 ==================
 
 |                      |                                          |
 |:---------------------|:-----------------------------------------|
-| **Author:**          | [Xabier de Zuazo](https://github.com/zuazo) (<xabier@onddo.com>)
-| **Copyright:**       | Copyright (c) 2014, Onddo Labs, SL. (www.onddo.com)
+| **Author:**          | [Xabier de Zuazo](https://github.com/zuazo) (<xabier@zuazo.org>)
+| **Copyright:**       | Copyright (c) 2015, Xabier de Zuazo
+| **Copyright:**       | Copyright (c) 2014-2015, Onddo Labs, SL.
 | **License:**         | Apache License, Version 2.0
 
     Licensed under the Apache License, Version 2.0 (the "License");
